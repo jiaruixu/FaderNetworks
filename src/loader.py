@@ -15,15 +15,46 @@ from logging import getLogger
 logger = getLogger()
 
 
+# AVAILABLE_ATTR = [
+#     "5_o_Clock_Shadow", "Arched_Eyebrows", "Attractive", "Bags_Under_Eyes", "Bald",
+#     "Bangs", "Big_Lips", "Big_Nose", "Black_Hair", "Blond_Hair", "Blurry", "Brown_Hair",
+#     "Bushy_Eyebrows", "Chubby", "Double_Chin", "Eyeglasses", "Goatee", "Gray_Hair",
+#     "Heavy_Makeup", "High_Cheekbones", "Male", "Mouth_Slightly_Open", "Mustache",
+#     "Narrow_Eyes", "No_Beard", "Oval_Face", "Pale_Skin", "Pointy_Nose",
+#     "Receding_Hairline", "Rosy_Cheeks", "Sideburns", "Smiling", "Straight_Hair",
+#     "Wavy_Hair", "Wearing_Earrings", "Wearing_Hat", "Wearing_Lipstick",
+#     "Wearing_Necklace", "Wearing_Necktie", "Young"
+# ]
+
 AVAILABLE_ATTR = [
-    "5_o_Clock_Shadow", "Arched_Eyebrows", "Attractive", "Bags_Under_Eyes", "Bald",
-    "Bangs", "Big_Lips", "Big_Nose", "Black_Hair", "Blond_Hair", "Blurry", "Brown_Hair",
-    "Bushy_Eyebrows", "Chubby", "Double_Chin", "Eyeglasses", "Goatee", "Gray_Hair",
-    "Heavy_Makeup", "High_Cheekbones", "Male", "Mouth_Slightly_Open", "Mustache",
-    "Narrow_Eyes", "No_Beard", "Oval_Face", "Pale_Skin", "Pointy_Nose",
-    "Receding_Hairline", "Rosy_Cheeks", "Sideburns", "Smiling", "Straight_Hair",
-    "Wavy_Hair", "Wearing_Earrings", "Wearing_Hat", "Wearing_Lipstick",
-    "Wearing_Necklace", "Wearing_Necktie", "Young"
+    "-10_0_-10", "-10_0_-5", "-10_0_0", "-10_0_10", "-10_0_15", "-10_0_20", "-10_0_5",
+    "-10_10_-10", "-10_10_-5", "-10_10_0", "-10_10_10", "-10_10_15", "-10_10_20", "-10_10_5",
+    "-10_15_-10", "-10_15_-5", "-10_15_0", "-10_15_10", "-10_15_15", "-10_15_20", "-10_15_5",
+    "-10_20_-10", "-10_20_-5", "-10_20_0", "-10_20_10", "-10_20_15", "-10_20_20", "-10_20_5",
+    "-10_5_-10", "-10_5_-5", "-10_5_0", "-10_5_10", "-10_5_15", "-10_5_20", "-10_5_5", "-5_0_-10",
+    "-5_0_-5", "-5_0_0", "-5_0_10", "-5_0_15", "-5_0_20", "-5_0_5", "-5_10_-10", "-5_10_-5",
+    "-5_10_0", "-5_10_10", "-5_10_15", "-5_10_20", "-5_10_5", "-5_15_-10", "-5_15_-5", "-5_15_0",
+    "-5_15_10", "-5_15_15", "-5_15_20", "-5_15_5", "-5_20_-10", "-5_20_-5", "-5_20_0", "-5_20_10",
+    "-5_20_15", "-5_20_20", "-5_20_5", "-5_5_-10", "-5_5_-5", "-5_5_0", "-5_5_10", "-5_5_15",
+    "-5_5_20", "-5_5_5", "0_0_-10", "0_0_-5", "0_0_10", "0_0_15", "0_0_20", "0_0_5", "0_10_-10",
+    "0_10_-5", "0_10_0", "0_10_10", "0_10_15", "0_10_20", "0_10_5", "0_15_-10", "0_15_-5", "0_15_0",
+    "0_15_10", "0_15_15", "0_15_20", "0_15_5", "0_20_-10", "0_20_-5", "0_20_0", "0_20_10", "0_20_15",
+    "0_20_20", "0_20_5", "0_5_-10", "0_5_-5", "0_5_0", "0_5_10", "0_5_15", "0_5_20", "0_5_5", "10_0_-10",
+    "10_0_-5", "10_0_0", "10_0_10", "10_0_15", "10_0_20", "10_0_5", "10_10_-10", "10_10_-5", "10_10_0",
+    "10_10_10", "10_10_15", "10_10_20", "10_10_5", "10_15_-10", "10_15_-5", "10_15_0", "10_15_10",
+    "10_15_15", "10_15_20", "10_15_5", "10_20_-10", "10_20_-5", "10_20_0", "10_20_10", "10_20_15",
+    "10_20_20", "10_20_5", "10_5_-10", "10_5_-5", "10_5_0", "10_5_10", "10_5_15", "10_5_20", "10_5_5",
+    "15_0_-10", "15_0_-5", "15_0_0", "15_0_10", "15_0_15", "15_0_20", "15_0_5", "15_10_-10", "15_10_-5",
+    "15_10_0", "15_10_10", "15_10_15", "15_10_20", "15_10_5", "15_15_-10", "15_15_-5", "15_15_0", "15_15_10",
+    "15_15_15", "15_15_20", "15_15_5", "15_20_-10", "15_20_-5", "15_20_0", "15_20_10", "15_20_15", "15_20_20",
+    "15_20_5", "15_5_-10", "15_5_-5", "15_5_0", "15_5_10", "15_5_15", "15_5_20", "15_5_5", "20_0_-10", "20_0_-5",
+    "20_0_0", "20_0_10", "20_0_15", "20_0_20", "20_0_5", "20_10_-10", "20_10_-5", "20_10_0", "20_10_10", "20_10_15",
+    "20_10_20", "20_10_5", "20_15_-10", "20_15_-5", "20_15_0", "20_15_10", "20_15_15", "20_15_20", "20_15_5",
+    "20_20_-10", "20_20_-5", "20_20_0", "20_20_10", "20_20_15", "20_20_20", "20_20_5", "20_5_-10", "20_5_-5",
+    "20_5_0", "20_5_10", "20_5_15", "20_5_20", "20_5_5", "5_0_-10", "5_0_-5", "5_0_0", "5_0_10", "5_0_15",
+    "5_0_20", "5_0_5", "5_10_-10", "5_10_-5", "5_10_0", "5_10_10", "5_10_15", "5_10_20", "5_10_5", "5_15_-10",
+    "5_15_-5", "5_15_0", "5_15_10", "5_15_15", "5_15_20", "5_15_5", "5_20_-10", "5_20_-5", "5_20_0", "5_20_10",
+    "5_20_15", "5_20_20", "5_20_5", "5_5_-10", "5_5_-5", "5_5_0", "5_5_10", "5_5_15", "5_5_20", "5_5_5"
 ]
 
 DATA_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data')
@@ -50,7 +81,8 @@ def load_images(params):
     Load celebA dataset.
     """
     # load data
-    images_filename = 'images_%i_%i_20000.pth' if params.debug else 'images_%i_%i.pth'
+    # images_filename = 'images_%i_%i_20000.pth' if params.debug else 'images_%i_%i.pth'
+    images_filename = 'images_%i_%i_200.pth' if params.debug else 'images_%i_%i.pth'
     images_filename = images_filename % (params.img_sz, params.img_sz)
     images = torch.load(os.path.join(DATA_PATH, images_filename))
     attributes = torch.load(os.path.join(DATA_PATH, 'attributes.pth'))
@@ -62,13 +94,21 @@ def load_images(params):
             attrs.append(torch.FloatTensor((attributes[name] == i).astype(np.float32)))
     attributes = torch.cat([x.unsqueeze(1) for x in attrs], 1)
     # split train / valid / test
+    # if params.debug:
+    #     train_index = 10000
+    #     valid_index = 15000
+    #     test_index = 20000
+    # else:
+    #     train_index = 162770
+    #     valid_index = 162770 + 19867
+    #     test_index = len(images)
     if params.debug:
-        train_index = 10000
-        valid_index = 15000
-        test_index = 20000
+        train_index = 100
+        valid_index = 150
+        test_index = 200
     else:
-        train_index = 162770
-        valid_index = 162770 + 19867
+        train_index = 3000
+        valid_index = 3000 + 500
         test_index = len(images)
     train_images = images[:train_index]
     valid_images = images[train_index:valid_index]
