@@ -7,6 +7,7 @@ __pycache__/
 *$py.class
 .idea/
 *.pth
+models/*
 
 # C extensions
 *.so

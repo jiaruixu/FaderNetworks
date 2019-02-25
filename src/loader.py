@@ -177,4 +177,8 @@ class DataSampler(object):
         assert i < j
         batch_x = normalize_images(self.images[i:j].cuda())
         batch_y = self.attributes[i:j].cuda()
-        return Variable(batch_x, volatile=True), Variable(batch_y, volatile=True)
+        ## modified by Jiarui
+        # return Variable(batch_x, volatile=True), Variable(batch_y, volatile=True)
+        with torch.no_grad():
+            return Variable(batch_x), Variable(batch_y)
+        ## end
