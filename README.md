@@ -18,6 +18,83 @@ The Fader Networks are also designed to disentangle multiple attributes at a tim
 
 <p align="center"><a href=https://github.com/facebookresearch/FaderNetworks/blob/master/images/multi_attr.jpg?raw=true><img width="100%" src="./images/multi_attr.jpg" /></a></p>
 
+### classifier
+
+```
+python classifier.py \
+--name "classifylx=-10ly=0lz=-10" \
+--img_sz 256 \
+--img_fm 3 \
+--attr "lx=-10ly=0lz=-10" \
+--init_fm 32 \
+--max_fm 512 \
+--hid_dim 512 \
+--v_flip False \
+--h_flip True \
+--batch_size 32 \
+--optimizer "adam,lr=0.0002" \
+--clip_grad_norm 5 \
+--n_epochs 400 \
+--epoch_size 2000 \
+--reload "" \
+--debug False
+```
+
+### train
+
+```
+python train.py \
+--name "trainlx=-10ly=0lz=-10" \
+--img_sz 256 \
+--img_fm 3 \
+--attr "lx=-10ly=0lz=-10" \
+--instance_norm False \
+--init_fm 32 \
+--max_fm 512 \
+--n_layers 6 \
+--n_skip 0 \
+--deconv_method "convtranspose" \
+--hid_dim 512 \
+--dec_dropout 0 \
+--lat_dis_dropout 0.3 \
+--n_lat_dis 1 \
+--n_ptc_dis 0 \
+--n_clf_dis 0 \
+--smooth_label 0.2 \
+--lambda_ae 1 \
+--lambda_lat_dis 0.0001 \
+--lambda_ptc_dis 0 \
+--lambda_clf_dis 0 \
+--lambda_schedule 500000 \
+--v_flip False \
+--h_flip True \
+--batch_size 32 \
+--ae_optimizer "adam,lr=0.0002" \
+--dis_optimizer "adam,lr=0.0002" \
+--clip_grad_norm 5 \
+--n_epochs 400 \
+--epoch_size 2000 \
+--ae_reload "" \
+--lat_dis_reload "" \
+--ptc_dis_reload "" \
+--clf_dis_reload "" \
+--eval_clf "/home/jiarui/git/FaderNetworks/models/classifylx=-10ly=0lz=-10/7yajm7d66z/periodic-60.pth" \
+--debug False
+```
+
+### deploy
+
+```
+python interpolate.py \
+--model_path /home/jiarui/git/FaderNetworks/models/trainlx=-10ly=0lz=-10/x9ip2c78x4/periodic-60_ae.pth \
+--n_images 10 \
+--n_interpolations 10 \
+--alpha_min 10.0 \
+--alpha_max 20.0 \
+--output_path test.png
+```
+
+
 ## Model
 
 <p align="center"><a href=https://github.com/facebookresearch/FaderNetworks/blob/master/images/v3.png?raw=true><img width="70%" src="./images/v3.png" /></a></p>

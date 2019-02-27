@@ -13,7 +13,7 @@ IMG_PATH = 'images_%i_%i.pth' % (IMG_SIZE, IMG_SIZE)
 ATTR_PATH = 'attributes.pth'
 DATASET_PATH = '/mnt/fcav/3D-lighting/dataset/data_attributes2'
 # DATASET_PATH = '/Users/jiarui/git/FaderNetworks/data/all_rgb'
-# IMAGE_PATHS = glob.glob(DATASET_PATH + '/all_rgb/*.png')
+# IMAGE_PATHS = sorted(glob.glob(DATASET_PATH + '/all_rgb/*.png'))
 # N_IMAGES = len(IMAGE_PATHS)
 
 
