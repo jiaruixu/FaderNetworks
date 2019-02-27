@@ -51,6 +51,7 @@ ae = torch.load(params.model_path).eval()
 # restore main parameters
 params.debug = True
 params.batch_size = 32
+# params.batch_size = 16
 params.v_flip = False
 params.h_flip = False
 params.img_sz = ae.img_sz

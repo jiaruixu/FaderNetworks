@@ -97,7 +97,8 @@ class Trainer(object):
         ## addded by Jiarui
         # enc_outputs = self.ae.encode(Variable(batch_x.data, volatile=True))
         with torch.no_grad():
-            enc_outputs = self.ae.encode(Variable(batch_x.data))
+            data_in = Variable(batch_x.data)
+        enc_outputs = self.ae.encode(data_in)
         ## end added by Jiarui
 
         preds = self.lat_dis(Variable(enc_outputs[-1 - params.n_skip].data))
