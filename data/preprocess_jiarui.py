@@ -7,14 +7,14 @@ import torch
 import glob
 
 
-N_IMAGES = 3904
+# N_IMAGES = 3904
 IMG_SIZE = 256
 IMG_PATH = 'images_%i_%i.pth' % (IMG_SIZE, IMG_SIZE)
 ATTR_PATH = 'attributes.pth'
 DATASET_PATH = '/mnt/fcav/3D-lighting/dataset/data_attributes2'
 # DATASET_PATH = '/Users/jiarui/git/FaderNetworks/data/all_rgb'
-# IMAGE_PATHS = sorted(glob.glob(DATASET_PATH + '/all_rgb/*.png'))
-# N_IMAGES = len(IMAGE_PATHS)
+IMAGE_PATHS = sorted(glob.glob(DATASET_PATH + '/all_rgb/*.png'))
+N_IMAGES = len(IMAGE_PATHS)
 
 
 def preprocess_images():
@@ -25,11 +25,29 @@ def preprocess_images():
 
     print("Reading images from all_rgb/ ...")
 
-    all_images = []
+    # all_images = []
+    raw_images = []
     for i in range(N_IMAGES):
         # all_images.append(mpimg.imread(IMAGE_PATHS[i]))
         image_file = glob.glob('%s/all_rgb/*_%d.png' % (DATASET_PATH, i))
-        all_images.append(mpimg.imread(image_file[0]))
+        # all_images.append(mpimg.imread(image_file[0]))
+        raw_images.append(mpimg.imread(image_file[0])[:, 35:-35])
+
+    if len(raw_images) != N_IMAGES:
+        raise Exception("Found %i images. Expected %i" % (len(raw_images), N_IMAGES))
+
+    print("Resizing images ...")
+    all_images = []
+    for i, image in enumerate(raw_images):
+        if i % 1000 == 0:
+            print(i)
+        assert image.shape == (230, 230, 3)
+        if IMG_SIZE < 230:
+            image = cv2.resize(image, (IMG_SIZE, IMG_SIZE), interpolation=cv2.INTER_AREA)
+        elif IMG_SIZE > 230:
+            image = cv2.resize(image, (IMG_SIZE, IMG_SIZE), interpolation=cv2.INTER_LANCZOS4)
+        assert image.shape == (IMG_SIZE, IMG_SIZE, 3)
+        all_images.append(image)
 
     data = np.concatenate([img.transpose((2, 0, 1))[None] for img in all_images], 0)
     data = torch.from_numpy(data)
@@ -54,7 +72,7 @@ def preprocess_attributes():
 
     for i, line in enumerate(attr_lines[1:]):
         split = line.split()
-        assert all(x in ['0', '1'] for x in split[1:])
+        assert all(x in ['-1', '1'] for x in split[1:])
         for j, value in enumerate(split[1:]):
             attributes[attr_keys[j]][i] = value == '1'
 
